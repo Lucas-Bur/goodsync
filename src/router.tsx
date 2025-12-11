@@ -20,7 +20,6 @@ export const getRouter = () => {
         </TanstackQuery.Provider>
       )
     },
-    // defaultErrorComponent: () => <p>Error</p>,
     defaultNotFoundComponent: () => <p>Not Found</p>,
   })
 
