@@ -1,17 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { LoginForm } from '@/components/LoginForm'
+import { AuthForm } from '@/components/AuthForm'
+import { guestMiddleware } from '@/middleware/auth'
 
 export const Route = createFileRoute('/login')({
-  component: LoginPage,
+  component: AuthForm,
+  server: {
+    middleware: [guestMiddleware],
+  },
 })
-
-function LoginPage() {
-  return (
-    <div className='flex items-center justify-center min-h-screen'>
-      <div className='w-full max-w-md'>
-        <h1 className='text-2xl font-bold mb-6'>Anmelden</h1>
-        <LoginForm />
-      </div>
-    </div>
-  )
-}

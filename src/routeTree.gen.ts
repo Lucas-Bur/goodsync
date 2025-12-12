@@ -9,27 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoDrizzleRouteImport } from './routes/demo/drizzle'
 import { Route as ApiUsersRouteImport } from './routes/api/users'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -55,18 +49,16 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
+  '/profile': typeof ProfileRoute
   '/api/users': typeof ApiUsersRoute
   '/demo/drizzle': typeof DemoDrizzleRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
+  '/profile': typeof ProfileRoute
   '/api/users': typeof ApiUsersRoute
   '/demo/drizzle': typeof DemoDrizzleRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -74,9 +66,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
+  '/profile': typeof ProfileRoute
   '/api/users': typeof ApiUsersRoute
   '/demo/drizzle': typeof DemoDrizzleRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -85,27 +76,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/dashboard'
     | '/login'
-    | '/register'
+    | '/profile'
     | '/api/users'
     | '/demo/drizzle'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/dashboard'
     | '/login'
-    | '/register'
+    | '/profile'
     | '/api/users'
     | '/demo/drizzle'
     | '/api/auth/$'
   id:
     | '__root__'
     | '/'
-    | '/dashboard'
     | '/login'
-    | '/register'
+    | '/profile'
     | '/api/users'
     | '/demo/drizzle'
     | '/api/auth/$'
@@ -113,9 +101,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
-  RegisterRoute: typeof RegisterRoute
+  ProfileRoute: typeof ProfileRoute
   ApiUsersRoute: typeof ApiUsersRoute
   DemoDrizzleRoute: typeof DemoDrizzleRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -123,11 +110,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -135,13 +122,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -177,9 +157,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
-  RegisterRoute: RegisterRoute,
+  ProfileRoute: ProfileRoute,
   ApiUsersRoute: ApiUsersRoute,
   DemoDrizzleRoute: DemoDrizzleRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
