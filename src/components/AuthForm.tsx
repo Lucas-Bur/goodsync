@@ -19,7 +19,13 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+  Tabs,
+  TabsContent,
+  TabsContents,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/motion-tabs'
 import { authClient } from '@/lib/auth-client'
 import {
   type LoginInput,
@@ -96,128 +102,138 @@ export function AuthForm() {
           <TabsTrigger value='register'>Registrieren</TabsTrigger>
         </TabsList>
 
-        {/* LOGIN TAB */}
-        <TabsContent value='login'>
-          <Card>
-            <CardHeader>
-              <CardTitle>Willkommen zurück</CardTitle>
-              <CardDescription>
-                Melde dich mit deiner E-Mail an.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Form {...loginForm}>
-                <form
-                  onSubmit={loginForm.handleSubmit(onLogin)}
-                  className='space-y-4'
-                >
-                  <FormField
-                    control={loginForm.control}
-                    name='email'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>E-Mail</FormLabel>
-                        <FormControl>
-                          <Input placeholder='m@example.com' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
+        <TabsContents>
+          {/* LOGIN TAB */}
+          <TabsContent value='login' key='login'>
+            <Card>
+              <CardHeader>
+                <CardTitle>Willkommen zurück</CardTitle>
+                <CardDescription>
+                  Melde dich mit deiner E-Mail an.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Form {...loginForm}>
+                  <form
+                    onSubmit={loginForm.handleSubmit(onLogin)}
+                    className='space-y-4'
+                  >
+                    <FormField
+                      control={loginForm.control}
+                      name='email'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>E-Mail</FormLabel>
+                          <FormControl>
+                            <Input placeholder='m@example.com' {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={loginForm.control}
+                      name='password'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Passwort</FormLabel>
+                          <FormControl>
+                            <Input type='password' {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    {loginForm.formState.errors.root && (
+                      <div className='text-destructive text-sm'>
+                        {loginForm.formState.errors.root.message}
+                      </div>
                     )}
-                  />
-                  <FormField
-                    control={loginForm.control}
-                    name='password'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Passwort</FormLabel>
-                        <FormControl>
-                          <Input type='password' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  {loginForm.formState.errors.root && (
-                    <div className='text-destructive text-sm'>
-                      {loginForm.formState.errors.root.message}
-                    </div>
-                  )}
-                  <Button className='w-full' type='submit' disabled={isLoading}>
-                    {isLoading ? 'Lädt...' : 'Anmelden'}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                    <Button
+                      className='w-full'
+                      type='submit'
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Lädt...' : 'Anmelden'}
+                    </Button>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-        {/* REGISTER TAB */}
-        <TabsContent value='register'>
-          <Card>
-            <CardHeader>
-              <CardTitle>Konto erstellen</CardTitle>
-              <CardDescription>
-                Gib deine Daten ein, um loszulegen.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Form {...registerForm}>
-                <form
-                  onSubmit={registerForm.handleSubmit(onRegister)}
-                  className='space-y-4'
-                >
-                  <FormField
-                    control={registerForm.control}
-                    name='name'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder='Max Mustermann' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
+          {/* REGISTER TAB */}
+          <TabsContent value='register' key='register'>
+            <Card>
+              <CardHeader>
+                <CardTitle>Konto erstellen</CardTitle>
+                <CardDescription>
+                  Gib deine Daten ein, um loszulegen.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Form {...registerForm}>
+                  <form
+                    onSubmit={registerForm.handleSubmit(onRegister)}
+                    className='space-y-4'
+                  >
+                    <FormField
+                      control={registerForm.control}
+                      name='name'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder='Max Mustermann' {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name='email'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>E-Mail</FormLabel>
+                          <FormControl>
+                            <Input placeholder='m@example.com' {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name='password'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Passwort</FormLabel>
+                          <FormControl>
+                            <Input type='password' {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    {registerForm.formState.errors.root && (
+                      <div className='text-destructive text-sm'>
+                        {registerForm.formState.errors.root.message}
+                      </div>
                     )}
-                  />
-                  <FormField
-                    control={registerForm.control}
-                    name='email'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>E-Mail</FormLabel>
-                        <FormControl>
-                          <Input placeholder='m@example.com' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={registerForm.control}
-                    name='password'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Passwort</FormLabel>
-                        <FormControl>
-                          <Input type='password' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  {registerForm.formState.errors.root && (
-                    <div className='text-destructive text-sm'>
-                      {registerForm.formState.errors.root.message}
-                    </div>
-                  )}
-                  <Button className='w-full' type='submit' disabled={isLoading}>
-                    {isLoading ? 'Erstellen...' : 'Registrieren'}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                    <Button
+                      className='w-full'
+                      type='submit'
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Erstellen...' : 'Registrieren'}
+                    </Button>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </TabsContents>
       </Tabs>
     </div>
   )
