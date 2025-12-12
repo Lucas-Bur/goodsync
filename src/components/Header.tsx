@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Database, Home, Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import { LogoutButton } from './LogoutButton'
 import { Button } from './ui/button'
 
 export default function Header() {
@@ -25,6 +26,7 @@ export default function Header() {
             />
           </Link>
         </h1>
+        <LogoutButton />
       </header>
 
       <aside

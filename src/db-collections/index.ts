@@ -2,8 +2,13 @@ import { electricCollectionOptions } from '@tanstack/electric-db-collection'
 import { createCollection } from '@tanstack/react-db'
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@/db'
-import { insertUserSchema, selectUserSchema, usersTable } from '@/db/schema'
+import {
+  insertUserSchema,
+  selectUserSchema,
+  usersTable,
+} from '@/db/schema/posts'
 
+// TODO. refactor
 const addUser = createServerFn({
   method: 'POST',
 })

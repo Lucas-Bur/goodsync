@@ -8,6 +8,13 @@
       "when": 1765424299800,
       "tag": "0000_hesitant_squadron_sinister",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1765478057561,
+      "tag": "0001_overjoyed_manta",
+      "breakpoints": true
     }
   ]
 }
