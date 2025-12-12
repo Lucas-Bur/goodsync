@@ -30,3 +30,5 @@ export type InsertUser = z.infer<typeof insertUserSchema>
 
 // export type InsertPost = typeof postsTable.$inferInsert
 // export type SelectPost = typeof postsTable.$inferSelect
+
+export const postsSync = [usersTable, postsTable] as const

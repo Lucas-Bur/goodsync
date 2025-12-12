@@ -13,20 +13,18 @@ import { authClient } from '@/lib/auth-client'
 
 export function UserMenu() {
   const navigate = useNavigate()
-  // Nutzung des Hooks für Reaktivität!
   const { data: session, isPending } = authClient.useSession()
 
   if (isPending)
-    return <div className='h-10 w-10 animate-pulse rounded-full bg-muted' />
+    return (
+      <div className='h-10 w-10 animate-pulse rounded-full bg-muted-foreground' />
+    )
 
   if (!session) {
     return (
       <div className='flex gap-2'>
         <Button asChild variant='ghost'>
-          <Link to='/login'>Anmelden</Link>
-        </Button>
-        <Button asChild>
-          <Link to='/login'>Registrieren</Link>
+          <Link to='/login'>Anmelden / Registrieren</Link>
         </Button>
       </div>
     )

@@ -2,13 +2,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner' // Optional: Falls du Sonner oder Toaster hast
 import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -91,7 +89,7 @@ export function AuthForm() {
   }
 
   return (
-    <div className='flex min-h-[50vh] items-center justify-center p-4'>
+    <div className='flex min-h-[50vh] items-start justify-center p-4 pt-14'>
       <Tabs defaultValue='login' className='w-[400px]'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='login'>Anmelden</TabsTrigger>

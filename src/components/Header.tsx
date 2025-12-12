@@ -1,80 +1,58 @@
 import { Link } from '@tanstack/react-router'
-import { Database, Home, Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { Layers } from 'lucide-react'
+import { ModeToggle } from './ModeToggle'
 import { UserMenu } from './UserMenu'
-import { Button } from './ui/button'
 
-export default function Header() {
-  const [isOpen, setIsOpen] = useState(false)
-
+export function Header() {
   return (
-    <>
-      <header className='p-4 flex items-center bg-gray-800 text-white shadow-lg'>
-        <Button
-          onClick={() => setIsOpen(true)}
-          className='p-2 hover:bg-gray-700 rounded-lg transition-colors'
-          aria-label='Open menu'
-        >
-          <Menu size={24} />
-        </Button>
-        <h1 className='ml-4 text-xl font-semibold'>
-          <Link to='/'>
-            <img
-              src='/tanstack-word-logo-white.svg'
-              alt='TanStack Logo'
-              className='h-10'
-            />
+    <header className='sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 backdrop-blur-xl supports-backdrop-filter:bg-background/60'>
+      <div className='container flex h-14 max-w-screen-2xl items-center mx-auto px-4'>
+        {/* LOGO */}
+        <div className='mr-4 flex'>
+          <Link to='/' className='mr-6 flex items-center space-x-2'>
+            <div className='bg-primary/10 p-1 rounded-md'>
+              <Layers className='h-6 w-6 text-primary' />
+            </div>
+            <span className='hidden font-bold sm:inline-block tracking-tight text-lg'>
+              Good<span className='text-primary'>Sync</span>
+            </span>
           </Link>
-        </h1>
-        <UserMenu />
-      </header>
 
-      <aside
-        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 text-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div className='flex items-center justify-between p-4 border-b border-gray-700'>
-          <h2 className='text-xl font-bold'>Navigation</h2>
-          <Button
-            onClick={() => setIsOpen(false)}
-            className='p-2 hover:bg-gray-800 rounded-lg transition-colors'
-            aria-label='Close menu'
-          >
-            <X size={24} />
-          </Button>
+          {/* NAVIGATION (Desktop) */}
+          <nav className='flex items-center gap-6 text-sm font-medium'>
+            <Link
+              to='/'
+              className='transition-colors hover:text-foreground/80 text-foreground/60'
+              activeProps={{ className: 'text-foreground font-semibold' }}
+            >
+              Übersicht
+            </Link>
+            <Link
+              to='/demo'
+              className='transition-colors hover:text-foreground/80 text-foreground/60'
+              activeProps={{ className: 'text-foreground font-semibold' }}
+            >
+              Data Explorer
+            </Link>
+          </nav>
         </div>
 
-        <nav className='flex-1 p-4 overflow-y-auto'>
-          <Link
-            to='/'
-            onClick={() => setIsOpen(false)}
-            className='flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2'
-            activeProps={{
-              className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-            }}
-          >
-            <Home size={20} />
-            <span className='font-medium'>Home</span>
-          </Link>
-
-          {/* Demo Links Start */}
-
-          <Link
-            to='/demo/drizzle'
-            onClick={() => setIsOpen(false)}
-            className='flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2'
-            activeProps={{
-              className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-            }}
-          >
-            <Database size={20} />
-            <span className='font-medium'>Drizzle</span>
-          </Link>
-        </nav>
-      </aside>
-    </>
+        {/* RECHTE SEITE */}
+        <div className='flex flex-1 items-center justify-end space-x-2'>
+          <nav className='flex items-center gap-2'>
+            <a
+              href='https://github.com/lucas-bur'
+              target='_blank'
+              rel='noreferrer'
+              className='hidden md:inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none ring-offset-background'
+            >
+              Documentation
+            </a>
+            <ModeToggle />
+            <UserMenu />
+          </nav>
+        </div>
+      </div>
+    </header>
   )
 }

@@ -11,9 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as DemoRouteImport } from './routes/demo'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoDrizzleRouteImport } from './routes/demo/drizzle'
-import { Route as ApiUsersRouteImport } from './routes/api/users'
+import { Route as ApiSyncSplatRouteImport } from './routes/api/sync.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
 const ProfileRoute = ProfileRouteImport.update({
@@ -26,19 +26,19 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoDrizzleRoute = DemoDrizzleRouteImport.update({
-  id: '/demo/drizzle',
-  path: '/demo/drizzle',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiUsersRoute = ApiUsersRouteImport.update({
-  id: '/api/users',
-  path: '/api/users',
+const ApiSyncSplatRoute = ApiSyncSplatRouteImport.update({
+  id: '/api/sync/$',
+  path: '/api/sync/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -49,63 +49,57 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/demo': typeof DemoRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
-  '/api/users': typeof ApiUsersRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/sync/$': typeof ApiSyncSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/demo': typeof DemoRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
-  '/api/users': typeof ApiUsersRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/sync/$': typeof ApiSyncSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/demo': typeof DemoRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
-  '/api/users': typeof ApiUsersRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/sync/$': typeof ApiSyncSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/demo'
     | '/login'
     | '/profile'
-    | '/api/users'
-    | '/demo/drizzle'
     | '/api/auth/$'
+    | '/api/sync/$'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/login'
-    | '/profile'
-    | '/api/users'
-    | '/demo/drizzle'
-    | '/api/auth/$'
+  to: '/' | '/demo' | '/login' | '/profile' | '/api/auth/$' | '/api/sync/$'
   id:
     | '__root__'
     | '/'
+    | '/demo'
     | '/login'
     | '/profile'
-    | '/api/users'
-    | '/demo/drizzle'
     | '/api/auth/$'
+    | '/api/sync/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DemoRoute: typeof DemoRoute
   LoginRoute: typeof LoginRoute
   ProfileRoute: typeof ProfileRoute
-  ApiUsersRoute: typeof ApiUsersRoute
-  DemoDrizzleRoute: typeof DemoDrizzleRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiSyncSplatRoute: typeof ApiSyncSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -124,6 +118,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -131,18 +132,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/drizzle': {
-      id: '/demo/drizzle'
-      path: '/demo/drizzle'
-      fullPath: '/demo/drizzle'
-      preLoaderRoute: typeof DemoDrizzleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/users': {
-      id: '/api/users'
-      path: '/api/users'
-      fullPath: '/api/users'
-      preLoaderRoute: typeof ApiUsersRouteImport
+    '/api/sync/$': {
+      id: '/api/sync/$'
+      path: '/api/sync/$'
+      fullPath: '/api/sync/$'
+      preLoaderRoute: typeof ApiSyncSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -157,11 +151,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DemoRoute: DemoRoute,
   LoginRoute: LoginRoute,
   ProfileRoute: ProfileRoute,
-  ApiUsersRoute: ApiUsersRoute,
-  DemoDrizzleRoute: DemoDrizzleRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiSyncSplatRoute: ApiSyncSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
