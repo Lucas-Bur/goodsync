@@ -26,13 +26,13 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/motion-tabs'
-import { authClient } from '@/lib/auth-client'
+import { authClient } from '../services/auth-client'
 import {
   type LoginInput,
   loginSchema,
   type RegisterInput,
   registerSchema,
-} from '@/lib/auth-schema'
+} from '../types/auth-schema'
 
 type AuthFormProps = {
   redirectTo: string

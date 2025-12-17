@@ -1,10 +1,10 @@
 import { getTableName } from 'drizzle-orm'
 
-import { authSync } from './auth'
-import { postsSync } from './posts'
+import { authSync } from '@/features/auth/db/schema/auth'
+import { postsSync } from '@/features/sync/db/schema/posts'
 
-export * from './auth'
-export * from './posts'
+export * from '@/features/auth/db/schema/auth'
+export * from '@/features/sync/db/schema/posts'
 
 const ALL_SYNCABLE = [...authSync, ...postsSync] as const
 const ALL_SYNCABLE_NAMES = ALL_SYNCABLE.map((pgTable) => getTableName(pgTable))

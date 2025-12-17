@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { authClient } from '@/lib/auth-client'
+import { authClient } from '../services/auth-client'
 
 export function UserMenu() {
   const navigate = useNavigate()

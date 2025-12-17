@@ -9,7 +9,7 @@ import {
   insertUserSchema,
   selectUserSchema,
   usersTable,
-} from '@/db/schema/posts'
+} from '../db/schema/posts'
 
 // TODO. refactor
 
