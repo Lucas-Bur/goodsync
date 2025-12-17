@@ -72,7 +72,7 @@ function LiveUsers() {
 function DemoDrizzle() {
   const handleAddUser = async () => {
     try {
-      const fakeId = Math.floor(Math.random() * 100000) * -1 // Negative ID für optimistic Updates
+      const fakeId = Math.floor(Math.random() * 100000) * -1 // Negative ID für optimistic Updates, btw this is just wrong and adds flickering
       await usersCollection.insert({
         age: 20 + Math.floor(Math.random() * 30),
         email: `user${Date.now()}@example.com`,
