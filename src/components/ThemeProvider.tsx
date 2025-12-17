@@ -1,40 +1,59 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { createServerFn } from '@tanstack/react-start'
+import { getCookie, setCookie } from '@tanstack/react-start/server'
+import { createContext, useContext, useEffect } from 'react'
+import { z } from 'zod'
 
-// This was a new try but i prefer the version von zkribe!
-
-const THEME_UI_KEY = 'ui-theme'
 type Theme = 'dark' | 'light' | 'system'
 
 type ThemeProviderProps = {
   children: React.ReactNode
-  defaultTheme?: Theme
-  storageKey?: string
 }
 
-type ThemeProviderState = {
-  theme: Theme
-  setTheme: (theme: Theme) => void
+type ThemeProviderState = { theme: Theme; setTheme: (theme: Theme) => void }
+
+const THEME_COOKIE_NAME = 'ui-theme'
+
+const initialState: ThemeProviderState = {
+  theme: 'system',
+  setTheme: () => null,
 }
 
-const ThemeProviderContext = createContext<ThemeProviderState | undefined>(
-  undefined,
-)
+const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
-export function ThemeProvider({
-  children,
-  defaultTheme = 'system',
-}: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== 'undefined') {
-      const match = document.cookie.match(
-        new RegExp(`(^| )${THEME_UI_KEY}=([^;]+)`),
-      )
-      return (match ? match[2] : defaultTheme) as Theme
-    }
-    return defaultTheme
+const getThemeFn = createServerFn().handler(async () => {
+  const theme = getCookie(THEME_COOKIE_NAME)
+  return theme ?? 'system'
+})
+
+const setThemeFn = createServerFn({ method: 'POST' })
+  .inputValidator(z.object({ theme: z.enum(['dark', 'light', 'system']) }))
+  .handler(async ({ data }) => {
+    setCookie(THEME_COOKIE_NAME, data.theme)
+    return data.theme
+  })
+
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  const { data, refetch } = useSuspenseQuery({
+    queryKey: ['theme'],
+    queryFn: () => getThemeFn(),
   })
 
   useEffect(() => {
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (event) => {
+        if (data === 'system') {
+          const newColorScheme = event.matches ? 'dark' : 'light'
+          const root = window.document.documentElement
+          root.classList.remove('light', 'dark')
+          root.classList.add(newColorScheme)
+        }
+      })
+  }, [data])
+
+  useEffect(() => {
+    const theme = data as Theme
     const root = window.document.documentElement
 
     root.classList.remove('light', 'dark')
@@ -50,13 +69,14 @@ export function ThemeProvider({
     }
 
     root.classList.add(theme)
-  }, [theme])
+  }, [data])
 
   const value = {
-    theme,
-    setTheme: (newTheme: Theme) => {
-      document.cookie = `${THEME_UI_KEY}=${newTheme}; path=/; max-age=31536000; SameSite=Lax`
-      setTheme(newTheme)
+    theme: data as Theme,
+    setTheme: (theme: Theme) => {
+      setThemeFn({ data: { theme } }).then(() => {
+        refetch()
+      })
     },
   }
 
