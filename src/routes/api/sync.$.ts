@@ -1,7 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { auth } from '@/features/auth/lib/auth-server' // Dein Auth Server Import
-import { isAllowedTable } from '@/lib/electric-helpers'
-import { prepareElectricUrl, proxyElectricRequest } from '@/lib/electric-proxy'
+import { isAllowedTable } from '@/features/sync/lib/electric-helpers'
+import {
+  prepareElectricUrl,
+  proxyElectricRequest,
+} from '@/features/sync/lib/electric-proxy'
 
 const serve = async ({ request }: { request: Request }) => {
   // 1. Auth Check (Optional aber empfohlen)
