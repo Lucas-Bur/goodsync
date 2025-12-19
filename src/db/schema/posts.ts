@@ -1,6 +1,5 @@
 import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
-import type z from 'zod'
 
 export const usersTable = pgTable('users_table', {
   id: serial('id').primaryKey(),
@@ -26,9 +25,12 @@ export const postsTable = pgTable('posts_table', {
 // export type SelectUser = typeof usersTable.$inferSelect
 export const insertUserSchema = createInsertSchema(usersTable)
 export const selectUserSchema = createSelectSchema(usersTable)
-export type InsertUser = z.infer<typeof insertUserSchema>
+// export type InsertUser = z.infer<typeof insertUserSchema>
 
 // export type InsertPost = typeof postsTable.$inferInsert
 // export type SelectPost = typeof postsTable.$inferSelect
+export const insertPostsSchema = createInsertSchema(postsTable)
+//^? s
+export const selectPostsSchema = createSelectSchema(postsTable)
 
 export const postsSync = [usersTable, postsTable] as const

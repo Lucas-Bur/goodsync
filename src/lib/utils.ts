@@ -25,3 +25,10 @@ export async function generateTxId(
 
   return parseInt(txid as string, 10)
 }
+
+export const syncEndpointUrl = new URL(
+  '/api/sync',
+  typeof window !== 'undefined'
+    ? window.location.origin
+    : 'http://localhost:3000',
+).toString()

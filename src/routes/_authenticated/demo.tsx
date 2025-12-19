@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Database, Loader2, Plus, User } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-import { usersCollection } from '@/db-collections'
+import { postsCollection, usersCollection } from '@/db-collections'
 
 export const Route = createFileRoute('/_authenticated/demo')({
   component: DemoDrizzle,
@@ -17,8 +17,14 @@ export const Route = createFileRoute('/_authenticated/demo')({
 
 function LiveUsers() {
   const { data: liveUsers, isLoading } = useLiveQuery((q) =>
-    q.from({ usersCollection }),
+    q
+      .from({ usersCollection })
+      .orderBy(({ usersCollection }) => usersCollection.name),
   )
+
+  const { data: livePosts } = useLiveQuery((q) => q.from({ postsCollection }))
+
+  console.log(livePosts)
 
   if (isLoading) {
     return (
@@ -74,7 +80,7 @@ function DemoDrizzle() {
   const handleAddUser = async () => {
     try {
       const fakeId = Math.floor(Math.random() * 100000) * -1 // Negative ID für optimistic Updates, btw this is just wrong and adds flickering
-      await usersCollection.insert({
+      usersCollection.insert({
         age: 20 + Math.floor(Math.random() * 30),
         email: `user${Date.now()}@example.com`,
         id: fakeId,
@@ -83,6 +89,22 @@ function DemoDrizzle() {
       toast.success('User erstellt (Optimistic Update)')
     } catch (_e) {
       toast.error('Fehler beim Erstellen')
+    }
+  }
+
+  const handleAddPost = async () => {
+    try {
+      const fakeId = -1
+      postsCollection.insert({
+        content: 'Das ist der wildeste Content ever!',
+        id: fakeId,
+        userId: 72,
+        title: 'Es ist soweit!',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+    } catch (_e) {
+      toast.error('Fehler beim erstellen')
     }
   }
 
@@ -111,6 +133,12 @@ function DemoDrizzle() {
             className='shadow-lg shadow-primary/20'
           >
             <Plus className='mr-2 h-4 w-4' /> User hinzufügen
+          </Button>
+          <Button
+            onClick={handleAddPost}
+            className='shadow-lg shadow-primary/20'
+          >
+            <Plus className='mr-2 h-4 w-4' /> Post hinzufügen
           </Button>
         </div>
 
