@@ -21,11 +21,11 @@ export function Header() {
           {/* NAVIGATION (Desktop) */}
           <nav className='flex items-center gap-6 text-sm font-medium'>
             <Link
-              to='/'
+              to='/scores'
               className='transition-colors hover:text-foreground/80 text-foreground/60'
               activeProps={{ className: 'text-foreground font-semibold' }}
             >
-              Übersicht
+              Scores
             </Link>
             <Link
               to='/demo'

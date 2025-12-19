@@ -13,6 +13,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedScoresRouteImport } from './routes/_authenticated/scores'
 import { Route as AuthenticatedDemoRouteImport } from './routes/_authenticated/demo'
 import { Route as ApiSyncSplatRouteImport } from './routes/api/sync.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
@@ -36,6 +37,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedScoresRoute = AuthenticatedScoresRouteImport.update({
+  id: '/scores',
+  path: '/scores',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedDemoRoute = AuthenticatedDemoRouteImport.update({
   id: '/demo',
   path: '/demo',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/demo': typeof AuthenticatedDemoRoute
+  '/scores': typeof AuthenticatedScoresRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/sync/$': typeof ApiSyncSplatRoute
 }
@@ -65,6 +72,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/demo': typeof AuthenticatedDemoRoute
+  '/scores': typeof AuthenticatedScoresRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/sync/$': typeof ApiSyncSplatRoute
 }
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/_authenticated/demo': typeof AuthenticatedDemoRoute
+  '/_authenticated/scores': typeof AuthenticatedScoresRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/sync/$': typeof ApiSyncSplatRoute
 }
@@ -85,10 +94,18 @@ export interface FileRouteTypes {
     | '/login'
     | '/profile'
     | '/demo'
+    | '/scores'
     | '/api/auth/$'
     | '/api/sync/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/profile' | '/demo' | '/api/auth/$' | '/api/sync/$'
+  to:
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/demo'
+    | '/scores'
+    | '/api/auth/$'
+    | '/api/sync/$'
   id:
     | '__root__'
     | '/'
@@ -96,6 +113,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/profile'
     | '/_authenticated/demo'
+    | '/_authenticated/scores'
     | '/api/auth/$'
     | '/api/sync/$'
   fileRoutesById: FileRoutesById
@@ -139,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/scores': {
+      id: '/_authenticated/scores'
+      path: '/scores'
+      fullPath: '/scores'
+      preLoaderRoute: typeof AuthenticatedScoresRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/demo': {
       id: '/_authenticated/demo'
       path: '/demo'
@@ -165,10 +190,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDemoRoute: typeof AuthenticatedDemoRoute
+  AuthenticatedScoresRoute: typeof AuthenticatedScoresRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDemoRoute: AuthenticatedDemoRoute,
+  AuthenticatedScoresRoute: AuthenticatedScoresRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

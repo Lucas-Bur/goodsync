@@ -24,8 +24,6 @@ function LiveUsers() {
 
   const { data: livePosts } = useLiveQuery((q) => q.from({ postsCollection }))
 
-  console.log(livePosts)
-
   if (isLoading) {
     return (
       <div className='flex flex-col items-center justify-center py-12 text-muted-foreground'>

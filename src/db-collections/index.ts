@@ -1,3 +1,4 @@
+import { FetchError } from '@electric-sql/client'
 import { electricCollectionOptions } from '@tanstack/electric-db-collection'
 import { createCollection } from '@tanstack/react-db'
 import { createServerFn } from '@tanstack/react-start'
@@ -86,6 +87,13 @@ export const postsCollection = createCollection(
       url: syncEndpointUrl,
       params: {
         table: 'posts_table',
+      },
+      onError: (error) => {
+        console.error('Stream error:', error)
+        if (error instanceof FetchError && error.status >= 500) {
+          return {} // Retry with same params
+        }
+        // Return void to stop on other errors
       },
     },
     schema: selectPostsSchema,
