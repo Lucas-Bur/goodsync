@@ -10,7 +10,7 @@ export const authMiddleware = createMiddleware({ type: 'request' }).server(
         to: '/login',
       })
     }
-    return await next()
+    return await next({ context: { session } })
   },
 )
 
