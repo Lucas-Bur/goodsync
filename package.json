@@ -18,8 +18,8 @@
     "db:prod:push": "dotenv -e .env -- drizzle-kit push",
     "db:dev:pull": "dotenv -e .env.local -- drizzle-kit pull",
     "db:prod:pull": "dotenv -e .env -- drizzle-kit pull",
-    "db:dev:up": "docker compose --env-file .env.local -f docker-compose.dev.yaml up",
-    "db:dev:down": "docker compose --env-file .env.local -f docker-compose.dev.yaml down"
+    "docker:dev:up": "docker compose --env-file .env.local -f docker-compose.dev.yaml up",
+    "docker:dev:down": "docker compose --env-file .env.local -f docker-compose.dev.yaml down"
   },
   "dependencies": {
     "@electric-sql/client": "^1.3.0",
